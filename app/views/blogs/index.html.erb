@@ -1,2 +1,7 @@
-<%=binding.pry%>
 <%= @works%>
+<% @animes.each do |anime|%>
+  <p><%= anime.node.title%></p>
+
+  <img src= "<%= anime.node.image.recommended_image_url %>" alt="ライオンの画像">
+<% end %>
+
