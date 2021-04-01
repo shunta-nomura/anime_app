@@ -3,7 +3,7 @@ class BlogsController < ApplicationController
   Anime = AnimeApp::Client.parse <<-GRAPHQL
   query {
     searchWorks(
-      seasons: ["2017-spring"],
+      seasons: ["2021-winter"],
       orderBy: { field: WATCHERS_COUNT, direction: DESC },
       first: 5
     ) {
@@ -12,7 +12,7 @@ class BlogsController < ApplicationController
           title
           watchersCount
           image {
-            recommendedImageUrl
+            facebookOgImageUrl
           }
         }
       }
@@ -40,14 +40,37 @@ class BlogsController < ApplicationController
     }
       GRAPHQL
 
+      Title = AnimeApp::Client.parse <<-GRAPHQL
+      query ($title: String!) {
+        searchWorks(
+          titles: [$title],
+          orderBy: { field: WATCHERS_COUNT, direction: DESC },
+          first: 5
+        ) {
+          edges {
+            node {
+              title
+              watchersCount
+              image {
+                recommendedImageUrl
+              }
+            }
+          }
+        }
+      }
+        GRAPHQL
+
   def index
     @animes = animeresult.data.search_works.edges
   end
 
   def search
-    # @aaaa = params[:keyword]
     @animes = searchresult(title: params[:keyword]).data.search_works.edges
-    # binding.pry
+  end
+
+  def show
+    @animes = work(title: params[:id]).data.search_works.edges
+    binding.pry
   end
 
   private
@@ -56,5 +79,8 @@ class BlogsController < ApplicationController
   end
   def searchresult(variables = {})
     response = AnimeApp::Client.query(Search, variables: variables)
+  end
+  def work(variables = {})
+    response = AnimeApp::Client.query(Title, variables: variables)
   end
 end

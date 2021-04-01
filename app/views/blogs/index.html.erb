@@ -1,7 +1,21 @@
-<%= @works%>
-<% @animes.each do |anime|%>
-  <p><%= anime.node.title%></p>
-
-  <img src= "<%= anime.node.image.recommended_image_url %>" alt="ライオンの画像">
-<% end %>
-
+<div class="row">
+	<% @animes.each do |anime|%>
+    <% animeimage = anime.node.image.facebook_og_image_url %>
+    <% if animeimage == ""
+      animeimage = "https://thumb.photo-ac.com/64/6472e2843a54dcaf22f5f1d8de444f5b_t.jpeg"
+    end %>
+    <div class="col-lg-6 title">
+      <p><%= anime.node.title%></p>
+			<%= link_to blog_path(anime.node.title) do%>
+        <div class="sample12">
+          <img src= "<%= animeimage %>" alt="アニメ画像" class="anime-image">
+          <div class="mask1"></div>
+          <div class="mask2"></div>
+          <div class="caption">
+            <p><%= anime.node.title%></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+	<% end %>
+</div>
