@@ -1,1 +1,6 @@
-<h1>こんにちは</h1>
+<% @animes.each do |anime|%>
+  <% animeimage = anime.node.image.facebook_og_image_url %>
+  <%= anime.node.title %>
+  <img src= "<%= animeimage %>" alt="アニメ画像" class="anime_img">
+  <%#= binding.pry %>
+<% end %>

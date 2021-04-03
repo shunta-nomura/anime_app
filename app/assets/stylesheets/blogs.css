@@ -58,3 +58,8 @@
 .title{
 	text-align: center;
 }
+.anime_img{
+  height: 250px;
+  width: 400px;
+	display: block;
+}

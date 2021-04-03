@@ -11,6 +11,8 @@ class BlogsController < ApplicationController
         node {
           title
           watchersCount
+          id
+          annictId
           image {
             facebookOgImageUrl
           }
@@ -41,9 +43,9 @@ class BlogsController < ApplicationController
       GRAPHQL
 
       Title = AnimeApp::Client.parse <<-GRAPHQL
-      query ($title: String!) {
+      query ($id: Int!) {
         searchWorks(
-          titles: [$title],
+          annictIds: [$id],
           orderBy: { field: WATCHERS_COUNT, direction: DESC },
           first: 5
         ) {
@@ -52,7 +54,7 @@ class BlogsController < ApplicationController
               title
               watchersCount
               image {
-                recommendedImageUrl
+                facebookOgImageUrl
               }
             }
           }
@@ -69,8 +71,7 @@ class BlogsController < ApplicationController
   end
 
   def show
-    @animes = work(title: params[:id]).data.search_works.edges
-    binding.pry
+    @animes = work(id: params[:id].to_i).data.search_works.edges
   end
 
   private
