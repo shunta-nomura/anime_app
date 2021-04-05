@@ -53,6 +53,9 @@ class BlogsController < ApplicationController
             node {
               title
               watchersCount
+              seasonName
+              seasonYear
+              twitterUsername
               image {
                 facebookOgImageUrl
               }

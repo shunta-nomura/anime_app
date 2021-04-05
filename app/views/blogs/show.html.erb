@@ -1,6 +1,17 @@
 <% @animes.each do |anime|%>
   <% animeimage = anime.node.image.facebook_og_image_url %>
-  <%= anime.node.title %>
-  <img src= "<%= animeimage %>" alt="アニメ画像" class="anime_img">
-  <%#= binding.pry %>
+  <div class="show_wrap">
+    <div class="show_left_box">
+      <div class="head_test-wrap">
+        <h1 class="head_test">
+            <%= anime.node.title %>
+        </h1>
+      </div>
+      <img src= "<%= animeimage %>" alt="アニメ画像" class="anime_img">
+    </div>
+    <div class="right_box">
+      <h3><%= anime.node.title %>の最新ツイート</h3>
+      <a class="twitter-timeline" data-height="500" data-theme="light" data-chrome=”noheader” href="https://twitter.com/<%= anime.node.twitter_username %>?ref_src=twsrc%5Etfw">Tweets by yurucamp_anime</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+  </div>
 <% end %>
