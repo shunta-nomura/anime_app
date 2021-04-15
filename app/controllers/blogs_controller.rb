@@ -33,8 +33,9 @@ class BlogsController < ApplicationController
           node {
             title
             watchersCount
+            annictId
             image {
-              recommendedImageUrl
+              facebookOgImageUrl
             }
           }
         }
@@ -56,6 +57,26 @@ class BlogsController < ApplicationController
               seasonName
               seasonYear
               twitterUsername
+              episodesCount
+              media
+              staffs {
+                edges {
+                  node {
+                    roleText
+                    name
+                  }
+                }
+              }
+              casts {
+                edges {
+                  node {
+                    character {
+                      name
+                    }
+                    name
+                  }
+                }
+              }
               image {
                 facebookOgImageUrl
               }
@@ -64,6 +85,28 @@ class BlogsController < ApplicationController
         }
       }
         GRAPHQL
+        Staff = AnimeApp::Client.parse <<-GRAPHQL
+        query ($id: Int!) {
+          searchWorks(
+            annictIds: [$id],
+            orderBy: { field: WATCHERS_COUNT, direction: DESC },
+            first: 5
+          ) {
+            edges {
+              node {
+                staffs {
+                  edges {
+                    node {
+                      name
+                      roleOther
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+          GRAPHQL
 
   def index
     @animes = animeresult.data.search_works.edges
@@ -75,6 +118,7 @@ class BlogsController < ApplicationController
 
   def show
     @animes = work(id: params[:id].to_i).data.search_works.edges
+    @staffs = staff(id: params[:id].to_i).data.search_works.edges
   end
 
   private
@@ -86,5 +130,8 @@ class BlogsController < ApplicationController
   end
   def work(variables = {})
     response = AnimeApp::Client.query(Title, variables: variables)
+  end
+  def staff(variables = {})
+    response = AnimeApp::Client.query(Staff, variables: variables)
   end
 end

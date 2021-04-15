@@ -1,17 +1,57 @@
 <% @animes.each do |anime|%>
   <% animeimage = anime.node.image.facebook_og_image_url %>
-  <div class="show_wrap">
-    <div class="show_left_box">
+  <% if animeimage == ""
+       animeimage = "http://www.ohishigumi.co.jp/wp-content/themes/ohishigumi/images/no-image5.gif"
+     end %>
+  <% animeseason = anime.node.season_name %>
+  <% casts = anime.node.casts.edges %>
+  <% staffs = anime.node.staffs.edges%>
+  <% if animeseason == "WINTER"
+        animeseason = "冬"
+      elsif animeseason == "AUTUMN"
+        animeseason = "秋"
+      elsif animeseason == "SPRING"
+        animeseason = "春"
+      elsif animeseason == "SUMMER"
+        animeseason = "夏"
+      end %>
+  <div class="show_wrap row">
+    <div class="show_left_box col-md-6">
       <div class="head_test-wrap">
         <h1 class="head_test">
             <%= anime.node.title %>
         </h1>
       </div>
       <img src= "<%= animeimage %>" alt="アニメ画像" class="anime_img">
-    </div>
-    <div class="right_box">
       <h3><%= anime.node.title %>の最新ツイート</h3>
       <a class="twitter-timeline" data-height="500" data-theme="light" data-chrome=”noheader” href="https://twitter.com/<%= anime.node.twitter_username %>?ref_src=twsrc%5Etfw">Tweets by yurucamp_anime</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+    <div class="right_box col-md-6">
+      <p class=""><%= anime.node.season_year %>年<%= animeseason %>放送</p>
+      <div class="row">
+        <div class="col-sm-6"> 
+          <h4>キャスト一覧</h4>
+          <% casts.each do |cast| %>
+            <p><%= cast.node.character.name %>:<%= cast.node.name %></p>
+          <% end %>
+        </div>
+        <div class="col-sm-6">
+          <h4>スタッフ一覧</h4>
+          <% staffs.each do |staff| %>
+            <% if staff.node.role_text != "その他" %>
+              <p><%= staff.node.role_text %>:<%= staff.node.name %></p>
+            <% end %>
+          <% end %>
+          <% @staffs.each do |staff| %>
+            <% other_staffs = staff.node.staffs.edges %>
+            <% other_staffs.each do |other_staff| %>
+              <% if other_staff.node != nil %>
+                <p><%= other_staff.node.role_other %>:<%= other_staff.node.name %></p>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>

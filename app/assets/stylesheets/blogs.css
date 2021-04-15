@@ -59,8 +59,8 @@
 	text-align: center;
 }
 .anime_img{
-  height: 300px;
-  width: auto;
+  height: auto;
+  width: 100%;
 	display: block;
 }
 .head_test {
@@ -68,7 +68,7 @@
 	font-size:  24px;               /* 文字サイズ指定 */
 	position:  relative;            /* 位置調整 */
 	font-weight:  normal;           /* 文字の太さ調整 */
-	margin-bottom: 15px;            /* 周りの余白指定 */
+	margin-bottom: 30px;            /* 周りの余白指定 */
 	padding-top: 50px;              /* 余白指定 */
 	padding-left: 40px;             /* 余白指定 */
 }
@@ -87,5 +87,4 @@
 	left: 30px;                     /* 位置調整 */
 }
 .show_wrap {
-	display: flex;
 }

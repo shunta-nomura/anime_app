@@ -1,5 +1,20 @@
-<% @animes.each do |anime|%>
-  <p><%= anime.node.title%></p>
-
-  <img src= "<%= anime.node.image.recommended_image_url %>">
-<% end %>
+<div class="row">
+  <% @animes.each do |anime|%>
+    <% animeimage = anime.node.image.facebook_og_image_url %>
+    <% if animeimage == ""
+      animeimage = "http://www.ohishigumi.co.jp/wp-content/themes/ohishigumi/images/no-image5.gif"
+    end %>
+    <div class="col-lg-6 title">
+      <p><%= anime.node.title%></p>
+      <%= link_to blog_path(anime.node.annict_id ) do%>
+        <div class="sample12">
+          <img src= "<%= animeimage %>" alt="アニメ画像" class="anime-image">
+          <div class="mask1"></div>
+          <div class="mask2"></div>
+          <div class="caption">
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
