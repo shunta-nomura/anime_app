@@ -8,30 +8,7 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-    <body>  
-      <header id="top-head">
-        <div class="inner">
-          <h1><a href="#">LOGO</a></h1>
-          <div id="nav_toggle">
-            <div>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </div>
-          <nav>
-            <ul>
-              <li><a href="#">HOME</a></li>
-              <li><a href="#">NEWS</a></li>
-              <li><a href="#">SERVICE</a></li>
-              <li><a href="#">CONTACT</a></li>
-              <li><a href="#">ABOUT</a></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-      <div class="wrap">
-        <%= yield %>
-      </div>
+  <body>  
+      <%= yield %>
   </body>
 </html>
