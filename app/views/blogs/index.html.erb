@@ -1,11 +1,12 @@
 <%= render "shared/header" %>
-<div class="row">
+<h2 class= "heading cont">今シーズンのアニメ一覧</h2>
+<div class=" anime-box ">
 	<% @animes.each do |anime|%>
     <% animeimage = anime.node.image.facebook_og_image_url %>
     <% if animeimage == ""
       animeimage = "https://thumb.photo-ac.com/64/6472e2843a54dcaf22f5f1d8de444f5b_t.jpeg"
     end %>
-    <div class="col-lg-6 title">
+    <div class="title">
       <p><%= anime.node.title%></p>
 			<%= link_to blog_path(anime.node.annict_id ) do%>
         <div class="sample12">

@@ -17,7 +17,7 @@ module AnimeApp
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
-    
+    config.time_zone = 'Asia/Tokyo'
   end
   AUTH_HEADER = "Bearer VvZSpm4ZWSvJGQ1_5mEG2XXOvGQEOu6o52R0JKKmNgc"
   # xxx=作成した際に表示されたアクセストークン

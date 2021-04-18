@@ -1,9 +1,9 @@
 class BlogsController < ApplicationController
 
   Anime = AnimeApp::Client.parse <<-GRAPHQL
-  query {
+  query ($season:String! ) {
     searchWorks(
-      seasons: ["2021-winter"],
+      seasons: [$season],
       orderBy: { field: WATCHERS_COUNT, direction: DESC },
       first: 5
     ) {
@@ -109,7 +109,8 @@ class BlogsController < ApplicationController
           GRAPHQL
 
   def index
-    @animes = animeresult.data.search_works.edges
+    now_season
+    @animes = animeresult(season: @season_year).data.search_works.edges
   end
 
   def search
@@ -122,8 +123,8 @@ class BlogsController < ApplicationController
   end
 
   private
-  def animeresult
-    response = AnimeApp::Client.query(Anime)
+  def animeresult(variables = {})
+    response = AnimeApp::Client.query(Anime, variables: variables)
   end
   def searchresult(variables = {})
     response = AnimeApp::Client.query(Search, variables: variables)
@@ -133,5 +134,22 @@ class BlogsController < ApplicationController
   end
   def staff(variables = {})
     response = AnimeApp::Client.query(Staff, variables: variables)
+  end
+  def now_season
+    require "date"
+    day = Date.today
+    year = day.year
+    month = day.month
+    season =""
+    if 10 <= month 
+      season = "winter"
+    elsif 7 <= month 
+      season = "summer"
+    elsif 4 <= month 
+      season = "spring"
+    else
+      season = "winter"
+    end
+    @season_year = year.to_s + "-" + season
   end
 end
